@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConverterController {
 
-    private ConverterService converterService;
+    private final ConverterService converterService;
 
     @Autowired
     public ConverterController(ConverterService converterService) {
@@ -22,12 +22,12 @@ public class ConverterController {
     }
 
     @RequestMapping(value = "/convert", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity convertJsonToXml(@RequestBody Summary summary) {
+    public ResponseEntity<String> convertJsonToXml(@RequestBody Summary summary) {
         String responseBody;
         try {
-            responseBody = converterService.convert(summary);
+            responseBody = converterService.convertToXml(summary);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something wrong happened");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can not convert summary to Xml");
         }
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(responseBody);
     }

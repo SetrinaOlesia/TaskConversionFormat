@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConverterController {
 
-    public ConverterService converterService;
+    private ConverterService converterService;
 
     @Autowired
     public ConverterController(ConverterService converterService) {
